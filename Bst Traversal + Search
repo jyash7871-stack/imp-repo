@@ -1,0 +1,116 @@
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class BinarySearchTree {
+
+    Node root;
+
+    // Insert a node into BST
+    Node insert(Node root, int data) {
+        if (root == null) {
+            return new Node(data);
+        }
+
+        if (data < root.data) {
+            root.left = insert(root.left, data);
+        } else {
+            root.right = insert(root.right, data);
+        }
+
+        return root;
+    }
+
+    // Inorder Traversal: Left -> Root -> Right
+    void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
+    }
+
+    // Preorder Traversal: Root -> Left -> Right
+    void preorder(Node root) {
+        if (root != null) {
+            System.out.print(root.data + " ");
+            preorder(root.left);
+            preorder(root.right);
+        }
+    }
+
+    // Postorder Traversal: Left -> Right -> Root
+    void postorder(Node root) {
+        if (root != null) {
+            postorder(root.left);
+            postorder(root.right);
+            System.out.print(root.data + " ");
+        }
+    }
+
+    // Search for a value
+    boolean search(Node root, int key) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.data == key) {
+            return true;
+        }
+
+        if (key < root.data) {
+            return search(root.left, key);
+        }
+
+        return search(root.right, key);
+    }
+
+    public static void main(String[] args) {
+
+        BinarySearchTree tree = new BinarySearchTree();
+
+        // Numbers to insert
+        int[] numbers = {25, 20, 30, 15, 21, 26, 31};
+
+        // Create BST
+        for (int number : numbers) {
+            tree.root = tree.insert(tree.root, number);
+        }
+
+        // Traversals
+        System.out.print("Inorder Traversal: ");
+        tree.inorder(tree.root);
+
+        System.out.print("\nPreorder Traversal: ");
+        tree.preorder(tree.root);
+
+        System.out.print("\nPostorder Traversal: ");
+        tree.postorder(tree.root);
+
+        // Search for 40
+        int key1 = 40;
+        System.out.println("\n\nSearching for " + key1 + ":");
+
+        if (tree.search(tree.root, key1)) {
+            System.out.println(key1 + " Found");
+        } else {
+            System.out.println(key1 + " Not Found");
+        }
+
+        // Search for 30
+        int key2 = 30;
+        System.out.println("\nSearching for " + key2 + ":");
+
+        if (tree.search(tree.root, key2)) {
+            System.out.println(key2 + " Found");
+        } else {
+            System.out.println(key2 + " Not Found");
+        }
+    }
+}
